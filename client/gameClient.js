@@ -60,80 +60,73 @@ Vue.component('board', {
 
 			console.log(this.$root.chosenShip);
 
-			if(this.$root.chosenShip == null || this.$root.chosenShip.available == 0) return;
+			if(this.$root.chosenShip == null || this.$root.chosenShip.available == 0) return; //not chosing ship/ship not available --> do nothing
 			var setCoordination = el.currentTarget.getAttribute('data-coordination');
 			var size = this.$root.chosenShip.size;
 			var hoveredTile = document.querySelectorAll('.tile-hover');
 			var overlap = false; //check for placing collision 
 
 			for (var i = size - 1; i >= 0; i--) {
-				if(this.$root.rotated){
-					if(parseInt(setCoordination.split("").reverse().join("")[0]) + size <= this.columns){
+				if(this.$root.rotated){ //horizontal
+					if(parseInt(setCoordination.split("").reverse().join("")[0]) + size <= this.columns){ //make ship not go out of grid
 						var e = document.querySelector('[data-coordination="'+(parseInt(setCoordination) + (i))+'"]');
 						if (e.className == 'placed-tile') overlap = true;
 					}else{
 						var e = document.querySelector('[data-coordination="' + (parseInt(setCoordination) - (i))+'"]'); 
 						if (e.className == 'placed-tile') overlap = true;
-						}
-					} if(!this.$root.rotated){
-						if(document.querySelector('[data-coordination="' + (parseInt(setCoordination) + (i * 10)) + '"]') != null){
-							var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]');
-							if(e.className == 'placed-tile') overlap = true;
-						}else{
-							console.log('no');
-							var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - ((size - i) *10)) + '"]');
-							if(e.className == 'placed-tile') overlap = true;
-						}
 					}
-				}
 
-				if(!overlap){
-					console.log(this.$root.chosenShip);
-					for (var i = hoveredTile.length - 1; i >= 0; i--) {
-						hoveredTile[i].className = 'placed-tile';
-						this.$root.chosenShip.location.push(parseInt(hoveredTile[i].getAttribute('data-coordination')));
-					}
-					this.$root.chosenShip.available--;
-					console.log(socket.emit('place', this.$root.chosenShip));
-				}
-
-			},
-changeStyle: function(el) {
-
-			if(this.$root.chosenShip == null || this.$root.chosenShip.available == 0)
-				return;
-
-			var setCoordination = el.currentTarget.getAttribute('data-coordination');
-
-			var size = this.$root.chosenShip.size;
-				
-
-			for (var i = 0; i < size; i++) {
-				var e = document.querySelector('[data-coordination="'+ setCoordination + (i)+'"]');
-
-				if(this.$root.rotated) {
-					if (parseInt(setCoordination.split("").reverse().join("")[0]) + size <= this.columns) {
-						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i)) +'"]');
-						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
-					}
-					else {
-						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - (i)) +'"]');
-						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
-					}
-				} else if (!this.$root.rotated) {
-					if (document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]') != null) {
+				}else if(!this.$root.rotated){ //vertical
+					if(document.querySelector('[data-coordination="' + (parseInt(setCoordination) + (i * 10)) + '"]') != null){
 						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]');
-						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
-					}
-					else {
-						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - ((size - i) * 10)) +'"]');
-						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+						if(e.className == 'placed-tile') overlap = true;
+					}else{
+						console.log('no');
+						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - ((size - i) *10)) + '"]');
+						if(e.className == 'placed-tile') overlap = true;
 					}
 				}
-
 			}
 
+			if(!overlap){
+				console.log(this.$root.chosenShip);
+				for (var i = hoveredTile.length - 1; i >= 0; i--) {
+					hoveredTile[i].className = 'placed-tile';
+					this.$root.chosenShip.location.push(parseInt(hoveredTile[i].getAttribute('data-coordination')));
+				}
+				this.$root.chosenShip.available--;
+				console.log(socket.emit('place', this.$root.chosenShip));
+			}
 		},
+	
+	changeStyle: function(el) {
+		if(this.$root.chosenShip == null || this.$root.chosenShip.available == 0) return;
+		
+		var setCoordination = el.currentTarget.getAttribute('data-coordination');
+		var size = this.$root.chosenShip.size;
+			
+		for (var i = 0; i < size; i++) {
+			var e = document.querySelector('[data-coordination="'+ setCoordination + (i)+'"]');
+
+			if(this.$root.rotated) {
+				if (parseInt(setCoordination.split("").reverse().join("")[0]) + size <= this.columns) {
+					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i)) +'"]');
+					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+				}else{
+					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - (i)) +'"]');
+					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+				}
+			} else if (!this.$root.rotated) {
+				if (document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]') != null) {
+					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]');
+					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+				}else{
+					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - ((size - i) * 10)) +'"]');
+					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+				}
+			}
+		}
+	},
 
 		setDef: function(el) {
 			if(this.$root.chosenShip == null) return;
