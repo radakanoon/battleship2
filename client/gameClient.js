@@ -100,34 +100,34 @@ Vue.component('board', {
 			}
 		},
 	
-	changeStyle: function(el) {
-		if(this.$root.chosenShip == null || this.$root.chosenShip.available == 0) return;
-		
-		var setCoordination = el.currentTarget.getAttribute('data-coordination');
-		var size = this.$root.chosenShip.size;
+		changeStyle: function(el) { //when choosing
+			if(this.$root.chosenShip == null || this.$root.chosenShip.available == 0) return;
 			
-		for (var i = 0; i < size; i++) {
-			var e = document.querySelector('[data-coordination="'+ setCoordination + (i)+'"]');
+			var setCoordination = el.currentTarget.getAttribute('data-coordination');
+			var size = this.$root.chosenShip.size;
+				
+			for (var i = 0; i < size; i++) {
+				var e = document.querySelector('[data-coordination="'+ setCoordination + (i)+'"]');
 
-			if(this.$root.rotated) {
-				if (parseInt(setCoordination.split("").reverse().join("")[0]) + size <= this.columns) {
-					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i)) +'"]');
-					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
-				}else{
-					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - (i)) +'"]');
-					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
-				}
-			} else if (!this.$root.rotated) {
-				if (document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]') != null) {
-					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]');
-					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
-				}else{
-					var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - ((size - i) * 10)) +'"]');
-					e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+				if(this.$root.rotated) {
+					if (parseInt(setCoordination.split("").reverse().join("")[0]) + size <= this.columns) {
+						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i)) +'"]');
+						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+					}else{
+						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - (i)) +'"]');
+						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+					}
+				} else if (!this.$root.rotated) {
+					if (document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]') != null) {
+						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]');
+						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+					}else{
+						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) - ((size - i) * 10)) +'"]');
+						e.className = e.className == 'placed-tile' ? 'placed-tile' : 'tile-hover';
+					}
 				}
 			}
-		}
-	},
+		},
 
 		setDef: function(el) {
 			if(this.$root.chosenShip == null) return;
@@ -190,13 +190,13 @@ var vm = new Vue({
 		{'type': 'Battleship', 'size': 4, 'sink': false, 'available': 1, 'location' : []},
 		{'type': 'Destroyer', 'size': 4, 'sink': false, 'available': 1, 'location' : []},
 		{'type': 'Submarine', 'size': 4, 'sink': false, 'available': 1, 'location' : []},
-	],
+		],
 
-	chosenShip: null,
-	statusMessage: 'Waiting for enemy....',
-	rotated: false,
-	enemyReady: false,
-	ready: false
+		chosenShip: null,
+		statusMessage: 'Waiting for enemy....',
+		rotated: false,
+		enemyReady: false,
+		ready: false
 	}, 
 
 	methods: {
@@ -207,13 +207,12 @@ var vm = new Vue({
 	}, 
 
 	computed: {
-		isReady: function(){
+		isReady: function(){ //tell that they ready to play (after done putting ship in grid)
 
 			var ready = true;
 			for (var i = 0; i < this.ships.length; i++) {
-				if(this.ships[i].available > 0) ready = false;
+				if(this.ships[i].available > 0) ready = false; //if ship still available means need to place more
 			}
-
 			if(ready == true) socket.emit('ready');
 			return ready;
 		}
@@ -226,16 +225,16 @@ var seconds = 10
 var id = 0
 var elem = document.getElementById("myBar");
 
-function setTheTimer(){
-	document.getElementById("the-timer").innerHTML = "0:10";
+function setTheTimer(){ //set interval function
+	document.getElementById("the-timer").innerHTML = "0:10"; //set intial interval
 	
-    function incrementSeconds() {
-		seconds -= 1;
-		if(seconds<0 || vm.player.permissionToFire == false){
+    function incrementSeconds() { 
+		seconds -= 1; //decrease time by 1 sec
+		if(seconds<0 || vm.player.permissionToFire == false){ //if timeout or being pressed --> clear timeout, set info back to original
 			clearTimeout(timee)
 			seconds = 10;
 			document.getElementById("the-timer").innerHTML = "0:10";
-		}else{
+		}else{ //if still have time
 			document.getElementById("the-timer").innerHTML = "0:0"+seconds;
 		}
 	}
@@ -243,16 +242,16 @@ function setTheTimer(){
 }
 
 function moveTimer() {
-    elem.style.width = '100%';
+    elem.style.width = '100%'; //make a style full of green area
     var elwidth = 100;
     
     id = setInterval(frame, 1000);
     function frame() {
-		if (elwidth === 0 || vm.player.permissionToFire == false) {
+		if (elwidth === 0 || vm.player.permissionToFire == false) { //if timeout or being pressed --> clear interval
 			clearInterval(id);
-			elem.style.width = '100%';
+			elem.style.width = '100%'; //make a style full of green area getInterval
 		} else {
-			elwidth = elwidth-10; 
+			elwidth = elwidth-10; //decrease every 10 sec
 			elem.style.width = elwidth + '%'; 
 		}
     }
