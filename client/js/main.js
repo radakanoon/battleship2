@@ -1,7 +1,3 @@
-/**
- * Created by Wim on 11-3-2016.
- */
-
 const Const = {};
 var gameWorld = {};
 
