@@ -343,7 +343,7 @@ var setShipRotation = function (rotation) { //rotate ship
 
 /**
  * @param  {titleTaken}
- * @return {[boolean]} [check if the cordinate of a placing ship is taken]
+ * @return {[boolean]} [check if the coordinate of a placing ship is taken]
  */
 var titleTaken = function (titles) {
     var taken = false;
