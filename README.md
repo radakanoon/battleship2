@@ -1,2 +1,2 @@
-# battleship2
+# battleship
 Shippy shippy shippy ship...
