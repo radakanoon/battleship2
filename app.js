@@ -44,7 +44,8 @@ var updateShip = function(id, ship, callback){
  * @return {[boolean]}       [sets pemission to true]
  */
 var permissionToFire = function(id, callback){
-	players.map(function(enemy){if(enemy.id == id) callback(enemy.permissionToFire = true);
+	players.map(function(enemy){
+		if(enemy.id == id) callback(enemy.permissionToFire = true);
 	});
 }
 
@@ -90,6 +91,10 @@ if(players.length > 1){
 	socket.emit('enemyIsFound', 'enemyIsFound');
 	socket.broadcast.emit('enemyIsFound', 'enemyIsFound');
 	players[0].permissionToFire = true; //give the first player permission to fire.
+
+	/** random first player*/
+	var i = Math.ceil((Math.random()*(players.length)));
+	players[i].permissionToFire = true;
 };
 
 socket.on('fire', function(obj, id, ship){
