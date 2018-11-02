@@ -90,6 +90,15 @@ io.on('connection', function(socket){
 		socket.emit('enemyIsFound', 'enemyIsFound');
 		socket.broadcast.emit('enemyIsFound', 'enemyIsFound');
 		players[0].permissionToFire = true; //give the first player permission to fire.
+
+		/** random first player*/
+		var i = Math.ceil((Math.random()*(players.length)));
+		players[i].permissionToFire = true;
+
+
+		
+
+		
 	};
 
 	socket.on('fire', function(obj, id, ship){
@@ -143,6 +152,7 @@ io.on('connection', function(socket){
 			players.map(function(player, index){if(player.id == id) players.splice(index, 1)});
 			console.log(id +" player left "+ players.length);
 	});
+
 });
 
 //let it listen on port
