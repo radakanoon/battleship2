@@ -146,6 +146,6 @@ io.on('connection', function(socket){
 });
 
 //let it listen on port
-http.listen(1337, function(){
-	console.log('listening on port 1337');
+http.listen(4000, function(){
+	console.log('listening on port 4000');
 });
