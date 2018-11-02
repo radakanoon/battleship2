@@ -216,7 +216,7 @@ var placeShip = function (title, pos) {
             if (!taken) {
                 for (i = 0; i < gameWorld.seletedShipType.size; i++) {
                     titleElem = document.getElementById(titles[i]);
-                    titleElem.style.backgroundColor = "blue";
+                    titleElem.style.backgroundColor = "#034f84";
 
                     gameWorld.shipTitels.push(titles[i]);
                 }
@@ -237,7 +237,7 @@ var placeShip = function (title, pos) {
             if (!taken) {
                 for (i = 0; i < gameWorld.seletedShipType.size; i++) {
                     titleElem = document.getElementById(titles[i]);
-                    titleElem.style.backgroundColor = "blue";
+                    titleElem.style.backgroundColor = "#034f84";
 
                     gameWorld.shipTitels.push(titles[i]);
                 }
@@ -276,7 +276,7 @@ var previewShip = function (title, pos) {
                     var id = Number(title.id) + i*12;
 
                     titleElem = document.getElementById(id);
-                    titleElem.style.backgroundColor = "lightblue";
+                    titleElem.style.backgroundColor = "#92a8d1";
 
                     gameWorld.previewTites.push(id);
                 }
@@ -298,7 +298,7 @@ var previewShip = function (title, pos) {
                     id = Number(title.id) + i;
 
                     titleElem = document.getElementById(id);
-                    titleElem.style.backgroundColor = "lightblue";
+                    titleElem.style.backgroundColor = "#92a8d1";
 
                     gameWorld.previewTites.push(id);
                 }
@@ -314,7 +314,7 @@ var previewShip = function (title, pos) {
 var resetPreviews = function () {
     for (var i = 0; i < gameWorld.previewTites.length; i++) {
         var elem = document.getElementById(gameWorld.previewTites[i]);
-        elem.style.backgroundColor = "red";
+        elem.style.backgroundColor = "#f7786b";
     }
     gameWorld.previewTites = [];
 };
@@ -331,11 +331,11 @@ var setShipType = function (type) { //set type of ship
 var setShipRotation = function (rotation) { //rotate ship
     gameWorld.selectedShipRotation = rotation;
     if(rotation == 0) {
-        document.getElementById("vertical").style.borderColor = "blue";
-        document.getElementById("horizontal").style.borderColor = "lightblue";
+        document.getElementById("vertical").style.borderColor = "#034f84";
+        document.getElementById("horizontal").style.borderColor = "#92a8d1";
     }else{
-        document.getElementById("vertical").style.borderColor = "lightblue";
-        document.getElementById("horizontal").style.borderColor = "blue";
+        document.getElementById("vertical").style.borderColor = "#92a8d1";
+        document.getElementById("horizontal").style.borderColor = "#034f84";
     }
 };
 
@@ -410,7 +410,7 @@ var OwnShipGrid = function (ships, shipTitles) {
 
                 for(var z = 0; z < shipTitles.length; z++){
                     if(id == shipTitles[z]){
-                        title.style.backgroundColor = 'blue';
+                        title.style.backgroundColor = '#034f84';
                     }
                 }
 
