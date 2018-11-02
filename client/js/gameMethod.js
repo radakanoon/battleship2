@@ -70,12 +70,10 @@ Statistics.prototype.incrementTaken = function () { //when press, will increase
 Statistics.prototype.wonGame = function () { //when win game, number of game ++ and number of won game ++
     this.gamesPlayed++;
     this.gamesWon++;
-    resetGame();
 };
 
 Statistics.prototype.lostGame = function () { //when lose game, number of game ++ only
     this.gamesPlayed++;
-    resetGame();
 };
 
 /**
