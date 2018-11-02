@@ -223,3 +223,41 @@ var vm = new Vue({
 	}
 }); 
 //Vue.config.debug = true;
+
+var timee = 0
+var seconds = 10
+var id = 0
+var elem = document.getElementById("myBar");
+setTheTimer();
+moveTimer();
+function setTheTimer(){
+    
+    document.getElementById("the-timer").innerHTML = "0:10";
+    function incrementSeconds() {
+    seconds -= 1;
+    if(seconds<0){
+      clearTimeout(timee)
+      
+    }else{
+        document.getElementById("the-timer").innerHTML = "0:0"+seconds;
+    }
+    
+}
+timee = setInterval(incrementSeconds, 1000);
+  }
+  
+  function moveTimer() {
+    elem.style.width = '100%';
+    var elwidth = 100;
+    
+      id = setInterval(frame, 1000);
+    function frame() {
+      if (elwidth === 0) {
+        clearInterval(id);
+        
+      } else {
+        elwidth = elwidth-10; 
+        elem.style.width = elwidth + '%'; 
+      }
+    }
+  }
