@@ -64,7 +64,7 @@ Vue.component('board', {
 			var setCoordination = el.currentTarget.getAttribute('data-coordination');
 			var size = this.$root.chosenShip.size;
 			var hoveredTile = document.querySelectorAll('.tile-hover');
-			var overlap = false; //check for placing colission 
+			var overlap = false; //check for placing collision 
 
 			for (var i = size - 1; i >= 0; i--) {
 				if(this.$root.rotated){
@@ -180,7 +180,8 @@ Vue.component('enemy-board', {
 				socket.emit('fire', {'player':vm.player, 'coordination' : parseInt(el.currentTarget.getAttribute('data-enemyCoordination'))});
 				el.currentTarget.className = 'missed-tile';
 				el.currentTarget.setAttribute('data-hittable', 'false');
-				vm.player.permissionToFire = false; vm.statusMessage = 'Enemy turn';
+				vm.player.permissionToFire = false;
+				vm.statusMessage = 'Enemy turn';
 			}
 		}
 	}
