@@ -76,7 +76,8 @@ Vue.component('board', {
 						if (e.className == 'placed-tile') overlap = true;
 					}
 
-				}else if(!this.$root.rotated){ //vertical
+				}
+				if(!this.$root.rotated){ //vertical
 					if(document.querySelector('[data-coordination="' + (parseInt(setCoordination) + (i * 10)) + '"]') != null){
 						var e = document.querySelector('[data-coordination="'+ (parseInt(setCoordination) + (i * 10)) +'"]');
 						if(e.className == 'placed-tile') overlap = true;
