@@ -97,6 +97,8 @@ io.on('connection', function(socket){
 
 
 		
+
+		
 	};
 
 	socket.on('fire', function(obj, id, ship){
