@@ -96,9 +96,6 @@ io.on('connection', function(socket){
 		players[i].permissionToFire = true;
 
 
-		
-
-		
 	};
 
 	socket.on('fire', function(obj, id, ship){
