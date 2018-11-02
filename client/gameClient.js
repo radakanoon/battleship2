@@ -36,7 +36,7 @@ socket.on('hit', function(obj){
 socket.on('updateBoards', function(obj){
 	var tile = document.querySelector('[data-coordination="' + obj.coordination +'"]');
 	if(tile.getAttribute('class') == 'placed-tile'){
-		tile.style.backgroundColor = 'red';
+		tile.style.backgroundColor = '#f7786b';
 		vm.statusMessage = 'enemy turn';
 	}else{
 		tile.style.backgroundColor = 'cornflowerblue';
@@ -53,7 +53,7 @@ Vue.component('board', {
 	props:['columns', 'rows'],
 	template: '#board-template',
 
-	methods: {
+	methods: { //place ship at first
 		placeTheShip: function(el){
 
 			console.log(this.$root.chosenShip);
@@ -231,33 +231,31 @@ var elem = document.getElementById("myBar");
 setTheTimer();
 moveTimer();
 function setTheTimer(){
-    
     document.getElementById("the-timer").innerHTML = "0:10";
     function incrementSeconds() {
-    seconds -= 1;
-    if(seconds<0){
-      clearTimeout(timee)
-      
-    }else{
-        document.getElementById("the-timer").innerHTML = "0:0"+seconds;
-    }
-    
+		seconds -= 1;
+		if(seconds<0){
+			clearTimeout(timee)
+		}else{
+			document.getElementById("the-timer").innerHTML = "0:0"+seconds;
+		}
+		
+	}
+	timee = setInterval(incrementSeconds, 1000);
 }
-timee = setInterval(incrementSeconds, 1000);
-  }
   
-  function moveTimer() {
+function moveTimer() {
     elem.style.width = '100%';
     var elwidth = 100;
     
-      id = setInterval(frame, 1000);
+      	id = setInterval(frame, 1000);
     function frame() {
-      if (elwidth === 0) {
-        clearInterval(id);
+      	if (elwidth === 0) {
+        	clearInterval(id);
         
-      } else {
-        elwidth = elwidth-10; 
-        elem.style.width = elwidth + '%'; 
-      }
+      	} else {
+        	elwidth = elwidth-10; 
+        	elem.style.width = elwidth + '%'; 
+      	}
     }
-  }
+}
