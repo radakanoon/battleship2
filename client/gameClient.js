@@ -11,6 +11,8 @@ socket.on('init', function(obj){
 
 socket.on('permissionFire', function(obj){
 	if(vm.player.id == obj.id){
+		setTheTimer();
+		moveTimer();
 		vm.player.permissionToFire = true;
 		vm.statusMessage = 'Your turn';
 	}else{
@@ -228,34 +230,35 @@ var timee = 0
 var seconds = 10
 var id = 0
 var elem = document.getElementById("myBar");
-setTheTimer();
-moveTimer();
+
 function setTheTimer(){
-    document.getElementById("the-timer").innerHTML = "0:10";
+	document.getElementById("the-timer").innerHTML = "0:10";
+	
     function incrementSeconds() {
 		seconds -= 1;
-		if(seconds<0){
+		if(seconds<0 || vm.player.permissionToFire == false){
 			clearTimeout(timee)
+			seconds = 10;
+			document.getElementById("the-timer").innerHTML = "0:10";
 		}else{
 			document.getElementById("the-timer").innerHTML = "0:0"+seconds;
 		}
-		
 	}
 	timee = setInterval(incrementSeconds, 1000);
 }
-  
+
 function moveTimer() {
     elem.style.width = '100%';
     var elwidth = 100;
     
-      	id = setInterval(frame, 1000);
+    id = setInterval(frame, 1000);
     function frame() {
-      	if (elwidth === 0) {
-        	clearInterval(id);
-        
-      	} else {
-        	elwidth = elwidth-10; 
-        	elem.style.width = elwidth + '%'; 
-      	}
+		if (elwidth === 0 || vm.player.permissionToFire == false) {
+			clearInterval(id);
+			elem.style.width = '100%';
+		} else {
+			elwidth = elwidth-10; 
+			elem.style.width = elwidth + '%'; 
+		}
     }
 }
