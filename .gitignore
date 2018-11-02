@@ -1,8 +1,9 @@
-# Editor data
-.vscode
+# # Editor data
+# .vscode
 
 # OS metadata
 .DS_Store
+
 node_modules
 package-lock.json
 
