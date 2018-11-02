@@ -1,7 +1,7 @@
 {
   "name": "package.json",
   "version": "1.0.0",
-  "address" : "",
+  "address": "",
   "description": "BattleShip Netcentric Arch 2018",
   "main": "app.js",
   "scripts": {
@@ -11,10 +11,14 @@
     "type": "git",
     "url": "git+https://github.com/radakanoon/battleship_project.git"
   },
-  "author": "We lost our ships",
+  "author": "We've lost our ships",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/radakanoon/battleship_project/issues"
   },
-  "homepage": "https://github.com/radakanoon/battleship_project#readme"
+  "homepage": "https://github.com/radakanoon/battleship_project#readme",
+  "dependencies": {
+    "express": "^4.16.4",
+    "socket.io": "^2.1.1"
+  }
 }
