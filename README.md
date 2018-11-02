@@ -1,2 +1,3 @@
 # battleship2
-test uploading
+Ship lost!
+Where's my ship?
