@@ -22,7 +22,7 @@ socket.on('permissionFire', function(obj){ //show whose turn is
 });
 
 socket.on('PlayerJoined', function(){
-	vm.statusMessage = 'Not ready';
+	vm.statusMessage = 'Not ready'; //enemy haven't done anything yet
 });
 
 socket.on('enemyIsReady', function(){
@@ -31,11 +31,11 @@ socket.on('enemyIsReady', function(){
 	console.log('Enemy is ready');
 });
 
-socket.on('hit', function(obj){
-	if(obj.hit) document.querySelector('[data-enemyCoordination="'+ obj.coordination +'"]').style.backgroundColor = "red";
+socket.on('hit', function(obj){ //hit the ship
+	if(obj.hit) document.querySelector('[data-enemyCoordination="'+ obj.coordination +'"]').style.backgroundColor = "#f7786b";
 });
 
-socket.on('updateBoards', function(obj){
+socket.on('updateBoards', function(obj){ //update grid
 	var tile = document.querySelector('[data-coordination="' + obj.coordination +'"]');
 	if(tile.getAttribute('class') == 'placed-tile'){
 		tile.style.backgroundColor = '#f7786b';
