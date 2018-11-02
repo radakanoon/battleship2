@@ -9,14 +9,14 @@ socket.on('init', function(obj){
 	vm.player = obj;
 });
 
-socket.on('permissionFire', function(obj){
+socket.on('permissionFire', function(obj){ //show whose turn is
 	if(vm.player.id == obj.id){
-		setTheTimer();
-		moveTimer();
-		vm.player.permissionToFire = true;
+		setTheTimer(); //set timer for 10 sec
+		moveTimer(); //set graphic for timer
+		vm.player.permissionToFire = true; //can play
 		vm.statusMessage = 'Your turn';
 	}else{
-		vm.permissionToFire = false;
+		vm.permissionToFire = false; //cannot play
 		vm.statusMessage = 'Enemy turn';
 	}
 });
