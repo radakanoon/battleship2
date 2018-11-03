@@ -124,13 +124,13 @@ io.on('connection', function(socket){
 			 */
 			if(enemy.takenHits >= 16) io.sockets.emit('win', enemy);
 
-		}else{
+		}else{ //miss
 			console.log('missed');
 			console.log(obj.coordination);
 		};
 
 		/**
-		 * updating the bord of the current enemy
+		 * updating the board of the current enemy
 		 * to show where the other play hit/missed.
 		 */
 		socket.broadcast.emit('updateBoards', { 'coordination': obj.coordination, 'enemy':enemy});
