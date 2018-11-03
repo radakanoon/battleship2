@@ -124,25 +124,25 @@ io.on('connection', function(socket){
 			 */
 			if(enemy.takenHits >= 16) io.sockets.emit('win', enemy);
 
-			}else{
-				console.log('missed');
-				console.log(obj.coordination);
-			};
+		}else{
+			console.log('missed');
+			console.log(obj.coordination);
+		};
 
-			/**
-			 * updating the bord of the current enemy
-			 * to show where the other play hit/missed.
-			 */
-			socket.broadcast.emit('updateBoards', { 'coordination': obj.coordination, 'enemy':enemy});
+		/**
+		 * updating the bord of the current enemy
+		 * to show where the other play hit/missed.
+		 */
+		socket.broadcast.emit('updateBoards', { 'coordination': obj.coordination, 'enemy':enemy});
 
-			/**
-			 * give the turn to fire to the enemy who got shot.
-			 * @return {[object]}  [send enemy object]
-			 */
-			permissionToFire(enemy.id, function(){
-					io.sockets.connected[enemy.id].emit('permissionFire', enemy);
-				});
-			console.log(enemy);
+		/**
+		 * give the turn to fire to the enemy who got shot.
+		 * @return {[object]}  [send enemy object]
+		 */
+		permissionToFire(enemy.id, function(){
+			io.sockets.connected[enemy.id].emit('permissionFire', enemy);
+		});
+		console.log(enemy);
 	});
 
 	socket.on('disconnect', function(){
