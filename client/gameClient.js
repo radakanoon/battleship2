@@ -1,3 +1,4 @@
+//old name = /vue/game.js
 var socket = io('');
 
 socket.on('enemyIsFound', function(){
