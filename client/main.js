@@ -1,7 +1,7 @@
 window.addEventListener('load', init);
 window.addEventListener('resize', init);
 
-function init() {
+function init() { //create grid
     var tds = document.getElementsByTagName('td');
     var tdWidth = tds[0].clientWidth;
     for (i = 0; i < tds.length; i++) {
