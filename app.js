@@ -2,12 +2,17 @@
 //import Express
 var app = require('express')();
 var express = require('express');
+var path = require('path');
 //create a NodeJs http server
 var http = require('http').Server(app);
 
 var io = require('socket.io')(http);
 app.use(express.static(__dirname + '/vuejs'));
 app.use(express.static(__dirname + '/socket.io'));
+
+app.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname + '/client/gameRoom.html'));
+});
 
 var players = [], turns = 0;
 

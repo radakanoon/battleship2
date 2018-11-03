@@ -24,102 +24,100 @@
     </script>
     <h1>Battleship</h1>
 
-<!--
-<div id = "name-room">
-    <h3>Please enter your name : </h3>
-    <form id="name-form" action="">
-        <input type="text" name="name" id="uniqueID" value="You"/>
-    </form>
-      <button onclick="toWaiting()" id='nextbtn' >Next</button>
-      
-      <script value="0" id="toWait">
-        function toWaiting() {
-            //document.getElementById("game-room").style.display = "block"
-            document.getElementById("name-room").style.display = "none"
+    <!--
+    <div id = "name-room">
+        <h3>Please enter your name : </h3>
+        <form id="name-form" action="">
+            <input type="text" name="name" id="uniqueID" value="You"/>
+        </form>
+        <button onclick="toWaiting()" id='nextbtn' >Next</button>
+        
+        <script value="0" id="toWait">
+            function toWaiting() {
+                //document.getElementById("game-room").style.display = "block"
+                document.getElementById("name-room").style.display = "none"
+            }
+            </script>
+    </div>-->
+
+    <center><h3 id="player-name"></h3></center>
+
+    <script>
+        myFunction()
+
+        function myFunction() {
+        var txt;
+        var person = prompt("Please enter your name:", "Player");
+        if (person == null || person == "") {
+            txt = "User cancelled the prompt.";
+        } else {
+            txt = "Hello, " + person;
+            alert("Welcome, "+person+"!\nGet ready to SHOOT!")
         }
-        </script>
-</div>-->
-
-<center><h3 id="player-name"></h3></center>
-
-<script>
-    myFunction()
-
-    function myFunction() {
-    var txt;
-    var person = prompt("Please enter your name:", "Player");
-    if (person == null || person == "") {
-        txt = "User cancelled the prompt.";
-    } else {
-        txt = "Hello, " + person;
-        alert("Welcome, "+person+"!\nGet ready to SHOOT!")
+        document.getElementById("player-name").innerHTML = txt;
     }
-    document.getElementById("player-name").innerHTML = txt;
-}
-</script>
+    </script>
 
+    <div id="game-room">
+        <div id="battleship">
+            <div id="msg">
+                <h4>{{statusMessage}}</h4>
+            </div>
+            <div id="ready">
+                <p id="your-name-on-board">your board: <span v-show="isReady"><font color="green"> Ready</font></span><span v-else><font color="red">Not ready!</font></span></p>
+            </div>
 
-<div id="game-room">
-    <div id="battleship">
-        <div id="msg">
-            <h4>{{statusMessage}}</h4>
+            <div id="ready2">
+                <p>enemy board: <span v-show="enemyReady"><font color="green"> Ready</font></span><span v-else><font color="red">Not ready!</font></span></p>
+            </div>
+            
+            <div id="boards">
+                <board :columns="8" :rows="8"></board>
+                <template id="board-template">
+                    <table border="1">
+                        <tr v-for="n in rows">
+                            <template v-for="i in columns">
+                            <td @click="placeTheShip($event)" data-coordination="{{ n == 0 ? i : n + '' +i}}"
+                                v-on:mouseleave="setDef($event)" v-on:mouseover="changeStyle($event)" class="tile"></td>
+                            </template>
+                        </tr>
+                    </table>
+                </template>
+            
+                <template id="enemyBoard-template">
+                    <table border="1">
+                        <tr v-for="n in rows">
+                            <template v-for="i in columns">
+                            <td @click="fire($event)" data-enemyCoordination="{{ n == 0 ? i : n + '' +i}}"
+                                data-hittable="true" class="tile"></td>
+                            </template>
+                        </tr>
+                    </table>
+                </template>
+
+                <enemy-board :columns="8" :rows="8"></enemy-board>
+            </div>
+
+            <div id="buttons">
+
+                <p v-for="ship in ships">
+                    &nbsp <!-- space -->
+                    {{ship.type}} {{ship.available}} <!-- write type of ship and number of ship left -->
+                    <button @click="setChosenShip(ship)" :disabled="ship.available == 0" type="button">Choose</button>
+                </p>
+            </div>
+
+            <!-- rotation of ship button -->
+            <button @click="rotated =! rotated" :disabled="ships.available == 0" type="button" id="rotate">
+                Rotate the ship {{rotated ? 'vertical' : 'horizontal'}}
+            </button>
         </div>
-        <div id="ready">
-            <p id="your-name-on-board">your board: <span v-show="isReady"><font color="green"> Ready</font></span><span v-else><font color="red">Not ready!</font></span></p>
-        </div>
-
-        <div id="ready2">
-            <p>enemy board: <span v-show="enemyReady"><font color="green"> Ready</font></span><span v-else><font color="red">Not ready!</font></span></p>
-        </div>
-        
-        <div id="boards">
-            <board :columns="8" :rows="8"></board>
-            <template id="board-template">
-                <table border="1">
-                    <tr v-for="n in rows">
-                        <template v-for="i in columns">
-                        <td @click="placeTheShip($event)" data-coordination="{{ n == 0 ? i : n + '' +i}}"
-                            v-on:mouseleave="setDef($event)" v-on:mouseover="changeStyle($event)" class="tile"></td>
-                        </template>
-                    </tr>
-                </table>
-            </template>
-        
-            <template id="enemyBoard-template">
-                <table border="1">
-                    <tr v-for="n in rows">
-                        <template v-for="i in columns">
-                        <td @click="fire($event)" data-enemyCoordination="{{ n == 0 ? i : n + '' +i}}"
-                            data-hittable="true" class="tile"></td>
-                        </template>
-                    </tr>
-                </table>
-            </template>
-
-
-            <enemy-board :columns="8" :rows="8"></enemy-board>
-        </div>
-
-        <div id="buttons">
-
-            <p v-for="ship in ships">
-                &nbsp <!-- space -->
-                {{ship.type}} {{ship.available}} <!-- write type of ship and number of ship left -->
-                <button @click="setChosenShip(ship)" :disabled="ship.available == 0" type="button">Choose</button>
-            </p>
-        </div>
-
-        <!-- rotation of ship button -->
-        <button @click="rotated =! rotated" :disabled="ships.available == 0" type="button" id="rotate">
-            Rotate the ship {{rotated ? 'vertical' : 'horizontal'}}
-        </button>
-    </div>
-    <center><h3 id="the-timer"></h3></center>
-    <div id="myProgressBar" style="width: 100%;background-color: #ddd;">
-        <div id="myBar" style="width: 100%;height: 30px;background-color: #4CAF50;">
+        <center><h3 id="the-timer"></h3></center>
+        <div id="myProgressBar" style="width: 100%;background-color: #ddd;">
+            <div id="myBar" style="width: 100%;height: 30px;background-color: #4CAF50;">
+            </div>
         </div>
     </div>
-</div>
 
 </body>
 <script type="text/javascript" src="vue.min.js"></script>
