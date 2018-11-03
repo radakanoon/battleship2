@@ -1,3 +1,6 @@
+
+//ไร้ปยยยยยยยยยย
+
 const Const = {};
 var gameWorld = {};
 
