@@ -150,6 +150,27 @@ io.on('connection', function(socket){
 			console.log(id +" player left "+ players.length);
 	});
 
+
+
+
+	socket.on('chat', function(msg){
+		if(users[socket.id].connected != null && msg){
+			console.log((new Date().toISOString()) + ' Chat message from ' + socket.id + ': ' + msg);
+		// Send message to opponent
+		socket.broadcast.to('game' + users[socket.id].inGame.id).emit('chat', {
+        	name: 'Opponent',
+        	message: entities.encode(msg),
+      	});
+
+      	// Send message to self
+      	io.to(socket.id).emit('chat', {
+        	name: 'Me',
+        	message: entities.encode(msg),
+      		});
+		}
+	});
+
+
 });
 
 //let it listen on port
