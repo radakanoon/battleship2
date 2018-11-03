@@ -7,7 +7,7 @@ var path = require('path');
 var http = require('http').Server(app);
 
 var io = require('socket.io')(http);
-app.use(express.static(__dirname + '/vuejs'));
+app.use(express.static(__dirname + '/client'));
 app.use(express.static(__dirname + '/socket.io'));
 
 app.get('/', function (req, res) {
