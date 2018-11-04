@@ -42,7 +42,7 @@ socket.on('updateBoards', function(obj){ //update grid
 		tile.style.backgroundColor = '#f7786b';
 		vm.statusMessage = 'enemy turn';
 	}else{
-		tile.style.backgroundColor = 'cornflowerblue';
+		tile.style.backgroundColor = '#b1cbbb';
 		vm.statusMessage = 'your turn';
 	}
 });
@@ -169,7 +169,7 @@ Vue.component('enemy-board', {
 		fire: function(el){
 			if(el.currentTarget.getAttribute('data-hittable') == 'true')
 			{
-				if(!vm.player || vm.player.permissionToFire == false) return;
+				if(!vm.player || vm.player.permissionToFire == false) return; //not your turn
 				if(vm.enemyReady != true) return alert('Your enemy is not ready yet');
 				console.log(parseInt(el.currentTarget.getAttribute('data-enemyCoordination')));
 				socket.emit('fire', {'player':vm.player, 'coordination' : parseInt(el.currentTarget.getAttribute('data-enemyCoordination'))});
@@ -232,9 +232,9 @@ function setTheTimer(){ //set interval function
     function incrementSeconds() { 
 		seconds -= 1; //decrease time by 1 sec
 		if(seconds<0 || vm.player.permissionToFire == false){ //if timeout or being pressed --> clear timeout, set info back to original
-			clearTimeout(timee)
-			seconds = 10;
 			document.getElementById("the-timer").innerHTML = "0:10";
+			clearInterval(timee)
+			seconds = 10;
 		}else{ //if still have time
 			document.getElementById("the-timer").innerHTML = "0:0"+seconds;
 		}
