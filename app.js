@@ -94,11 +94,12 @@ io.on('connection', function(socket){
 	if(players.length > 1){
 		socket.emit('enemyIsFound', 'enemyIsFound');
 		socket.broadcast.emit('enemyIsFound', 'enemyIsFound');
+
 		players[0].permissionToFire = true; //give the first player permission to fire.
 
 		/** random first player*/
-		var i = Math.ceil((Math.random()*(players.length)));
-		players[i].permissionToFire = true;
+		// var i = Math.ceil((Math.random()*(players.length)));
+		// players[i].permissionToFire = true;
 
 
 	};

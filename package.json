@@ -1,7 +1,7 @@
 {
   "name": "package.json",
   "version": "1.0.0",
-  "address": "",
+  "address": "192.168.1.181",
   "description": "BattleShip Netcentric Arch 2018",
   "main": "app.js",
   "scripts": {
