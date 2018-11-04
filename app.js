@@ -104,11 +104,6 @@ io.on('connection', function(socket){
 		/** random first player*/
 		// var i = Math.ceil((Math.random()*(players.length)));
 		// players[i].permissionToFire = true;
-<<<<<<< HEAD
-
-=======
->>>>>>> 6f5ffcdb6bfda180c104f5d01771c2fcafda6a86
-
 	};
 
 	socket.on('fire', function(obj, id, ship){ //after shoot?
