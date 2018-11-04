@@ -6,9 +6,9 @@ socket.on('enemyIsFound', function(){
 	socket.emit('init');
 });
 
-socket.on('init', function(obj){
-	vm.player = obj;
-});
+// socket.on('init', function(obj){
+// 	vm.player = obj;
+// });
 
 socket.on('permissionFire', function(obj){ //show whose turn is
 	if(vm.player.id == obj.id){
