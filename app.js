@@ -2,6 +2,7 @@
 //import Express
 var app = require('express')();
 var express = require('express');
+// import path
 var path = require('path');
 //create a NodeJs http server
 var http = require('http').Server(app);
@@ -49,7 +50,10 @@ var updateShip = function(id, ship, callback){
  * @return {[boolean]}       [sets pemission to true]
  */
 var permissionToFire = function(id, callback){
-	players.map(function(enemy){if(enemy.id == id) callback(enemy.permissionToFire = true);
+	players.map(function(enemy){
+		if(enemy.id == id){ //if enemy = id, enemy trun
+			callback(enemy.permissionToFire = true);
+		}
 	});
 }
 
@@ -81,7 +85,7 @@ io.on('connection', function(socket){
 
 	socket.on('init', function(player){
 		var player;
-			for (var i = players.length - 1; i >= 0; i--) {
+		for (var i = players.length - 1; i >= 0; i--) {
 			if(players[i].id == id) player = players[i]
 		}
 
@@ -100,11 +104,14 @@ io.on('connection', function(socket){
 		/** random first player*/
 		// var i = Math.ceil((Math.random()*(players.length)));
 		// players[i].permissionToFire = true;
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6f5ffcdb6bfda180c104f5d01771c2fcafda6a86
 
 	};
 
-	socket.on('fire', function(obj, id, ship){
+	socket.on('fire', function(obj, id, ship){ //after shoot?
 		turns++;
 
 		var enemy = [];
@@ -156,9 +163,7 @@ io.on('connection', function(socket){
 			console.log(id +" player left "+ players.length);
 	});
 
-
-
-
+	//chat feature
 	socket.on('chat', function(msg){
 		if(users[socket.id].connected != null && msg){
 			console.log((new Date().toISOString()) + ' Chat message from ' + socket.id + ': ' + msg);
@@ -175,7 +180,6 @@ io.on('connection', function(socket){
       		});
 		}
 	});
-
 
 });
 
